@@ -37,7 +37,7 @@ namespace Hangman // hangman
             {
                 UserChars[i] = '?';//using ? instead of _ to differentiate unknowns as it is easier to read
             }
-            string newhang =new string(ArrayofHangman);// just to prove you can convert a char array to a string
+            //string newhang =new string(ArrayofHangman);// just to prove you can convert a char array to a string
             //Console.WriteLine(newhang);
             //Console.WriteLine(hangman);
             //Console.WriteLine(ArrayofHangman);
@@ -53,8 +53,8 @@ namespace Hangman // hangman
                 if (userguess[wrongcount].Length>1)// if the length of the string given by user is greater than 1 we know they tried to enter a word
                 {
                     //if the word is correct
-                    if (UserChars == ArrayofHangman || userguess[wrongcount] == newhang)// if statement to set condition to break loop when either correct word is guessed or all individual chars have been guessed. 
-                    // using newhang just to prove that in a case where you only get given a char array you can convert it to a string to perform this logic check
+                    if (UserChars == ArrayofHangman || userguess[wrongcount] == hangman)// if statement to set condition to break loop when either correct word is guessed or all individual chars have been guessed. 
+                    
                     {
                         Console.WriteLine($"Congratulations you correctly guessed the word: {hangman}");
                         Iscorrect = true;
@@ -62,6 +62,16 @@ namespace Hangman // hangman
                     else
                     {
                         Console.WriteLine($"The word you entered: {userguess[wrongcount]}. Was not my word");
+                    }
+                }
+                else
+                {
+                    for (int i = 0;i < hangman.Length;i++)
+                    {
+                        if (userguess[wrongcount]==ArrayofHangman[i].ToString())//checks if each value in the hangman char array is equal to the user input
+                        {
+                            UserChars[i] = ArrayofHangman[i];// copies the correctly guessed letter into the UserChars Array at the corrct position
+                        }
                     }
                 }
                 
