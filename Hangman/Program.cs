@@ -28,12 +28,13 @@ namespace Hangman // hangman
         static void Main(string[] args)
         {
             string hangman = "hello";
+            int wordlength= hangman.Length;
             string[] userguess = new string[10];
             int wrongcount = 0;
             char[] ArrayofHangman = hangman.ToCharArray();
-            char[] UserChars = new char[hangman.Length];//chars displayed to user
+            char[] UserChars = new char[wordlength];//chars displayed to user
             bool Iscorrect = false;
-            for (int i = 0; i < hangman.Length; i++)// loops for the length of the hangman string to add ? to the array
+            for (int i = 0; i < wordlength; i++)// loops for the length of the hangman string to add ? to the array
             {
                 UserChars[i] = '?';//using ? instead of _ to differentiate unknowns as it is easier to read
             }
@@ -41,46 +42,69 @@ namespace Hangman // hangman
             //Console.WriteLine(newhang);
             //Console.WriteLine(hangman);
             //Console.WriteLine(ArrayofHangman);
-            Console.WriteLine($"Welcome to Hangman! Currently my word is {hangman.Length} long and is represented by: {UserChars} can you guess the word in 10 tries?");
+            Console.WriteLine($"Welcome to Hangman! You get 10 tries to guess my word. Currently my word is {wordlength} letters long and is represented by:");
+            Console.WriteLine(UserChars);
             Console.WriteLine("Each time you guess a letter correctly I wil replace a ? with the correct letter, get them all and you win!");//user instructions
             
             while (wrongcount != 10 && Iscorrect==false) 
             {
-                Console.WriteLine($"Currently you know my word has: {UserChars}");
-                Console.WriteLine("Enter a Letter or Word");
-                userguess[wrongcount] = Console.ReadLine();
+                Console.WriteLine($"Currently you know my word has these letters:");
+                Console.WriteLine(UserChars);// shows what letters the user has correct and their position as well as the ones they don't
+                Console.WriteLine("Enter a Letter or Word");     
+                string guessthistime= Console.ReadLine();
+                userguess[wrongcount] = guessthistime;
                 //Console.WriteLine(userguess[wrongcount]);
-                if (userguess[wrongcount].Length>1)// if the length of the string given by user is greater than 1 we know they tried to enter a word
+                if (guessthistime.Length>1)// if the length of the string given by user is greater than 1 we know they tried to enter a word
                 {
                     //if the word is correct
-                    if (UserChars == ArrayofHangman || userguess[wrongcount] == hangman)// if statement to set condition to break loop when either correct word is guessed or all individual chars have been guessed. 
+                    if (UserChars == ArrayofHangman || guessthistime == hangman)// if statement to set condition to break loop when either correct word is guessed or all individual chars have been guessed. 
                     
                     {
                         Console.WriteLine($"Congratulations you correctly guessed the word: {hangman}");
-                        Iscorrect = true;
+                        Iscorrect = true;//breaks the loop if the user has the correct word
                     }
                     else
                     {
-                        Console.WriteLine($"The word you entered: {userguess[wrongcount]}. Was not my word");
+                        Console.WriteLine($"The word you entered: {guessthistime}. Was not my word");// tells the user they got the word wrong
                     }
                 }
                 else
                 {
-                    for (int i = 0;i < hangman.Length;i++)
+                    int NumberOfCorrectCharsThisTime = 0;
+                    for (int i = 0;i < wordlength; i++)
                     {
-                        if (userguess[wrongcount]==ArrayofHangman[i].ToString())//checks if each value in the hangman char array is equal to the user input
+                        if (guessthistime == ArrayofHangman[i].ToString())//checks if each value in the hangman char array is equal to the user input
                         {
                             UserChars[i] = ArrayofHangman[i];// copies the correctly guessed letter into the UserChars Array at the corrct position
+                            Console.WriteLine("Congratulations you got a letter right. You now know my word contains:");
+                            Console.WriteLine(UserChars);
+                            NumberOfCorrectCharsThisTime++;
                         }
                     }
+                    if (NumberOfCorrectCharsThisTime ==0)
+                    {
+                        Console.WriteLine($"your guess of {guessthistime} was not in my word.");
+                    }
+                    string completehang =new string(UserChars);// turns user char array of the correct chars so for into a string so that you can compare to hangman word
+                    if (hangman==completehang)// if the user has the correct word by guessing all the chars then exits the loop
+                    {
+                        Console.WriteLine($"Congratulations you correctly guessed the word: {hangman}");
+                        Iscorrect =true;
+                    }
                 }
-                
+
+                Console.WriteLine($"You have currently guessed {wrongcount+1} times. Your current guesses are:");//tells the user all the guesses they have made
+                for (int i = 0; i < wrongcount+1; i++)
+                {
+                    Console.WriteLine(userguess[i]);
+                }
                 wrongcount++;
             }
             if(Iscorrect==false)
             {
                 Console.WriteLine($"Uh oh you're out of tries! the correct word was {hangman} better luck next time");
             }
+            
             
         }
 
