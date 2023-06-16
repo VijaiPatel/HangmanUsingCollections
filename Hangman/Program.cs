@@ -57,10 +57,9 @@ namespace Hangman // hangman
                 if (guessthistime.Length>1)// if the length of the string given by user is greater than 1 we know they tried to enter a word
                 {
                     //if the word is correct
-                    if (UserChars == ArrayofHangman || guessthistime == hangman)// if statement to set condition to break loop when either correct word is guessed or all individual chars have been guessed. 
+                    if (guessthistime == hangman)// if statement to set condition to break loop when th correct word is guessed. 
                     
                     {
-                        Console.WriteLine($"Congratulations you correctly guessed the word: {hangman}");
                         Iscorrect = true;//breaks the loop if the user has the correct word
                     }
                     else
@@ -102,7 +101,11 @@ namespace Hangman // hangman
             }
             if(Iscorrect==false)
             {
-                Console.WriteLine($"Uh oh you're out of tries! the correct word was {hangman} better luck next time");
+                Console.WriteLine($"Uh oh you're out of tries! the correct word was: '{hangman}' better luck next time");
+            }
+            else
+            {
+                Console.WriteLine($"Congratulations you correctly guessed the word: '{hangman}'");
             }
             
             
