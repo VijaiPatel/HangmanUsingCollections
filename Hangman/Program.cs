@@ -46,16 +46,25 @@ namespace Hangman // hangman
             
             while (wrongcount != 10 && Iscorrect==false) 
             {
+                Console.WriteLine($"Currently you know my word has: {UserChars}");
                 Console.WriteLine("Enter a Letter or Word");
                 userguess[wrongcount] = Console.ReadLine();
                 //Console.WriteLine(userguess[wrongcount]);
-
-                if (UserChars == ArrayofHangman || userguess[wrongcount]==newhang)// if statement to set condition to break loop when either correct word is guessed or all individual chars have been guessed. 
-                // using newhang just to prove that in a case where you only get given a char array you can convert it to a string to perform this logic check
+                if (userguess[wrongcount].Length>1)// if the length of the string given by user is greater than 1 we know they tried to enter a word
                 {
-                    Console.WriteLine($"Congratulations you correctly guessed the word: {hangman}");
-                    Iscorrect = true;
+                    //if the word is correct
+                    if (UserChars == ArrayofHangman || userguess[wrongcount] == newhang)// if statement to set condition to break loop when either correct word is guessed or all individual chars have been guessed. 
+                    // using newhang just to prove that in a case where you only get given a char array you can convert it to a string to perform this logic check
+                    {
+                        Console.WriteLine($"Congratulations you correctly guessed the word: {hangman}");
+                        Iscorrect = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"The word you entered: {userguess[wrongcount]}. Was not my word");
+                    }
                 }
+                
                 wrongcount++;
             }
             if(Iscorrect==false)
