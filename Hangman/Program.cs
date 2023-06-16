@@ -31,31 +31,39 @@ namespace Hangman // hangman
             string[] userguess = new string[10];
             int wrongcount = 0;
             char[] ArrayofHangman = hangman.ToCharArray();
-            char[] UserChars = new char[hangman.Length];
+            char[] UserChars = new char[hangman.Length];//chars displayed to user
             bool Iscorrect = false;
             for (int i = 0; i < hangman.Length; i++)// loops for the length of the hangman string to add ? to the array
             {
                 UserChars[i] = '?';//using ? instead of _ to differentiate unknowns as it is easier to read
             }
-
-
+            string newhang =new string(ArrayofHangman);// just to prove you can convert a char array to a string
+            //Console.WriteLine(newhang);
+            //Console.WriteLine(hangman);
+            //Console.WriteLine(ArrayofHangman);
             Console.WriteLine($"Welcome to Hangman! Currently my word is {hangman.Length} long and is represented by: {UserChars} can you guess the word in 10 tries?");
             Console.WriteLine("Each time you guess a letter correctly I wil replace a ? with the correct letter, get them all and you win!");//user instructions
-            Console.WriteLine(hangman);
-            Console.WriteLine(ArrayofHangman);
+            
             while (wrongcount != 10 && Iscorrect==false) 
             {
                 Console.WriteLine("Enter a Letter or Word");
                 userguess[wrongcount] = Console.ReadLine();
                 //Console.WriteLine(userguess[wrongcount]);
 
-                if (UserChars==ArrayofHangman)
+                if (UserChars == ArrayofHangman || userguess[wrongcount]==newhang)// if statement to set condition to break loop when either correct word is guessed or all individual chars have been guessed. 
+                // using newhang just to prove that in a case where you only get given a char array you can convert it to a string to perform this logic check
                 {
+                    Console.WriteLine($"Congratulations you correctly guessed the word: {hangman}");
                     Iscorrect = true;
                 }
                 wrongcount++;
             }
+            if(Iscorrect==false)
+            {
+                Console.WriteLine($"Uh oh you're out of tries! the correct word was {hangman} better luck next time");
+            }
             
         }
+
     }
 }
